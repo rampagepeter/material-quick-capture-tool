@@ -1,0 +1,23 @@
+{
+  "name": "material-quick-capture",
+  "version": "1.0.0",
+  "description": "素材快捷投递工具 - 桌面客户端",
+  "main": "../src/main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --dev",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "electron",
+    "screenshot",
+    "feishu",
+    "productivity"
+  ],
+  "author": "Material Quick Capture Team",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^37.1.0",
+    "electron-builder": "^26.0.12"
+  }
+}

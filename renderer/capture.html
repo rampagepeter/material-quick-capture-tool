@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>内容捕获</title>
+    <link rel="stylesheet" href="capture.css">
+</head>
+<body>
+    <div class="capture-container">
+        <div class="capture-header">
+            <h2>素材捕获</h2>
+        </div>
+        
+        <div class="capture-content">
+            <div id="preview-area" class="preview-area">
+                <!-- 内容预览将在这里动态加载 -->
+            </div>
+            
+            <div class="content-edit">
+                <textarea id="content-input" placeholder="编辑内容..." rows="3"></textarea>
+            </div>
+            
+            <div class="comment-section">
+                <label for="comment-input">备注：</label>
+                <input type="text" id="comment-input" placeholder="可选的备注信息">
+            </div>
+        </div>
+        
+        <div class="capture-actions">
+            <button id="cancel-btn" class="btn btn-secondary">取消</button>
+            <button id="submit-btn" class="btn btn-primary">提交</button>
+        </div>
+    </div>
+    
+    <script src="capture.js"></script>
+</body>
+</html> 

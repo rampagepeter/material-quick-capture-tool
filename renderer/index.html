@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>素材快捷投递工具</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>素材快捷投递工具</h1>
+            <div class="status" id="status">
+                <span class="status-dot offline"></span>
+                <span class="status-text">未连接</span>
+            </div>
+        </header>
+
+        <main>
+            <div class="tab-container">
+                <div class="tab-buttons">
+                    <button class="tab-button active" data-tab="config">配置</button>
+                    <button class="tab-button" data-tab="usage">使用说明</button>
+                </div>
+
+                <div class="tab-content active" id="config-tab">
+                    <form id="config-form">
+                        <div class="form-group">
+                            <label for="server-url">服务器地址：</label>
+                            <input type="url" id="server-url" placeholder="http://localhost:3001" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="secret-key">访问密钥：</label>
+                            <input type="password" id="secret-key" placeholder="请输入访问密钥" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="submitter-name">提交者姓名：</label>
+                            <input type="text" id="submitter-name" placeholder="请输入您的姓名" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>快捷键设置：</label>
+                            <div class="shortcut-group">
+                                <div class="shortcut-item">
+                                    <div class="shortcut-setting">
+                                        <span>智能捕获：</span>
+                                        <div class="shortcut-capture">
+                                            <div class="shortcut-display" id="shortcut-display">
+                                                Cmd+Shift+T
+                                            </div>
+                                            <button type="button" id="capture-shortcut-btn" class="capture-btn">
+                                                修改
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <small>自动识别文本或图片</small>
+                                    <div id="shortcut-capture-area" class="capture-area" style="display: none;">
+                                        <div class="capture-prompt">
+                                            请按下您想要设置的快捷键组合...
+                                        </div>
+                                        <div class="capture-actions">
+                                            <button type="button" id="save-shortcut-btn" class="save-btn" disabled>
+                                                保存
+                                            </button>
+                                            <button type="button" id="cancel-shortcut-btn" class="cancel-btn">
+                                                取消
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="button" id="test-connection">测试连接</button>
+                            <button type="submit">保存配置</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="tab-content" id="usage-tab">
+                    <div class="usage-guide">
+                        <h3>使用说明</h3>
+                        <ol>
+                            <li><strong>配置服务器</strong>：在配置页面填入云端服务地址和访问密钥</li>
+                            <li><strong>智能捕获</strong>：复制文本或截图后按快捷键自动识别并提交</li>
+                            <li><strong>自定义快捷键</strong>：在配置页面可以修改智能捕获的快捷键</li>
+                            <li><strong>托盘操作</strong>：应用最小化后在系统托盘中运行</li>
+                        </ol>
+
+                        <h3>快捷操作</h3>
+                        <div class="quick-actions">
+                            <button id="smart-capture" class="action-button primary">
+                                🚀 智能捕获 (推荐)
+                            </button>
+                            <button id="capture-text" class="action-button">
+                                📝 文本捕获
+                            </button>
+                            <button id="capture-image" class="action-button">
+                                📸 图片捕获
+                            </button>
+                        </div>
+
+                        <h3>状态说明</h3>
+                        <ul class="status-list">
+                            <li><span class="status-dot online"></span> 已连接：服务正常运行</li>
+                            <li><span class="status-dot offline"></span> 未连接：请检查网络和配置</li>
+                            <li><span class="status-dot error"></span> 错误：配置或网络异常</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>版本 1.0.0 | 使用 Electron 构建</p>
+        </footer>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html> 

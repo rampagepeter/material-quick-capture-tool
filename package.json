@@ -1,0 +1,49 @@
+{
+  "name": "material-quick-capture",
+  "version": "1.0.0",
+  "description": "素材快捷投递工具 - 桌面客户端",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "npx electron .",
+    "dev": "npx electron . --dev",
+    "build": "npx electron-builder",
+    "build:mac": "npx electron-builder --mac",
+    "build:win": "npx electron-builder --win",
+    "dist": "npx electron-builder --publish=never",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["electron", "screenshot", "feishu", "productivity"],
+  "author": "Material Quick Capture Team",
+  "license": "MIT",
+  "dependencies": {
+    "electron-fetch": "^1.9.1"
+  },
+  "devDependencies": {
+    "electron": "^37.1.0",
+    "electron-builder": "^26.0.12"
+  },
+  "build": {
+    "appId": "com.materialquickcapture.app",
+    "productName": "素材快捷投递工具",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "src/**/*",
+      "renderer/**/*",
+      "node_modules/**/*",
+      "package.json"
+    ],
+    "mac": {
+      "category": "public.app-category.productivity",
+      "target": "dmg"
+    },
+    "win": {
+      "target": "nsis"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
+  }
+} 
