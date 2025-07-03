@@ -72,8 +72,8 @@ Material Quick-Capture Tool/
 
 ```bash
 # 克隆项目
-git clone <repository-url>
-cd Material\ Quick-Capture\ Tool
+git clone https://github.com/rampagepeter/material-quick-capture-tool.git
+cd material-quick-capture-tool
 
 # 安装依赖
 npm install
