@@ -11,7 +11,7 @@
         <header>
             <h1>素材快捷投递工具</h1>
             <div class="status" id="status">
-                <span class="status-dot offline"></span>
+                <div class="status-dot offline"></div>
                 <span class="status-text">未连接</span>
             </div>
         </header>
@@ -19,104 +19,364 @@
         <main>
             <div class="tab-container">
                 <div class="tab-buttons">
-                    <button class="tab-button active" data-tab="config">配置</button>
-                    <button class="tab-button" data-tab="usage">使用说明</button>
+                    <button class="tab-button active" data-tab="feishu">飞书配置</button>
+                    <button class="tab-button" data-tab="tables">表格管理</button>
+                    <button class="tab-button" data-tab="settings">设置</button>
+                    <button class="tab-button" data-tab="about">关于</button>
                 </div>
 
-                <div class="tab-content active" id="config-tab">
-                    <form id="config-form">
+                <div class="tab-content active" id="feishu-tab">
+                    <div class="section">
+                        <h3>飞书应用配置</h3>
+                        <p class="section-desc">配置您的飞书应用凭据，用于访问多维表格</p>
+                        
                         <div class="form-group">
-                            <label for="server-url">服务器地址：</label>
-                            <input type="url" id="server-url" placeholder="http://localhost:3001" required>
+                            <label for="feishu-app-id">App ID</label>
+                            <input type="text" id="feishu-app-id" placeholder="请输入飞书应用的 App ID">
+                            <span class="help-text">在飞书开发者控制台中获取</span>
                         </div>
 
                         <div class="form-group">
-                            <label for="secret-key">访问密钥：</label>
-                            <input type="password" id="secret-key" placeholder="请输入访问密钥" required>
+                            <label for="feishu-app-secret">App Secret</label>
+                            <input type="password" id="feishu-app-secret" placeholder="请输入飞书应用的 App Secret">
                         </div>
 
                         <div class="form-group">
-                            <label for="submitter-name">提交者姓名：</label>
-                            <input type="text" id="submitter-name" placeholder="请输入您的姓名" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label>快捷键设置：</label>
-                            <div class="shortcut-group">
-                                <div class="shortcut-item">
-                                    <div class="shortcut-setting">
-                                        <span>智能捕获：</span>
-                                        <div class="shortcut-capture">
-                                            <div class="shortcut-display" id="shortcut-display">
-                                                Cmd+Shift+T
-                                            </div>
-                                            <button type="button" id="capture-shortcut-btn" class="capture-btn">
-                                                修改
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <small>自动识别文本或图片</small>
-                                    <div id="shortcut-capture-area" class="capture-area" style="display: none;">
-                                        <div class="capture-prompt">
-                                            请按下您想要设置的快捷键组合...
-                                        </div>
-                                        <div class="capture-actions">
-                                            <button type="button" id="save-shortcut-btn" class="save-btn" disabled>
-                                                保存
-                                            </button>
-                                            <button type="button" id="cancel-shortcut-btn" class="cancel-btn">
-                                                取消
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <label for="submitter-name">提交者姓名</label>
+                            <input type="text" id="submitter-name" placeholder="请输入您的姓名">
+                            <span class="help-text">用于标识素材提交者</span>
                         </div>
 
                         <div class="form-actions">
-                            <button type="button" id="test-connection">测试连接</button>
-                            <button type="submit">保存配置</button>
+                            <button type="button" id="test-feishu-btn" class="btn btn-secondary">测试连接</button>
+                            <button type="button" id="save-feishu-btn" class="btn btn-primary">保存配置</button>
                         </div>
-                    </form>
+
+                        <!-- 简化的权限状态显示 -->
+                        <div class="permission-status" id="permission-status">
+                            <span class="status-text">权限状态：点击"测试连接"检查配置</span>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="tab-content" id="usage-tab">
-                    <div class="usage-guide">
-                        <h3>使用说明</h3>
-                        <ol>
-                            <li><strong>配置服务器</strong>：在配置页面填入云端服务地址和访问密钥</li>
-                            <li><strong>智能捕获</strong>：复制文本或截图后按快捷键自动识别并提交</li>
-                            <li><strong>自定义快捷键</strong>：在配置页面可以修改智能捕获的快捷键</li>
-                            <li><strong>托盘操作</strong>：应用最小化后在系统托盘中运行</li>
-                        </ol>
-
-                        <h3>快捷操作</h3>
-                        <div class="quick-actions">
-                            <button id="smart-capture" class="action-button primary">
-                                🚀 智能捕获 (推荐)
-                            </button>
-                            <button id="capture-text" class="action-button">
-                                📝 文本捕获
-                            </button>
-                            <button id="capture-image" class="action-button">
-                                📸 图片捕获
-                            </button>
+                <div class="tab-content" id="tables-tab">
+                    <div class="section">
+                        <div class="section-header">
+                            <h3>表格配置</h3>
+                            <button type="button" id="add-table-btn" class="btn btn-primary btn-small">添加表格</button>
                         </div>
+                        <p class="section-desc">管理您的多维表格配置和字段映射</p>
 
-                        <h3>状态说明</h3>
-                        <ul class="status-list">
-                            <li><span class="status-dot online"></span> 已连接：服务正常运行</li>
-                            <li><span class="status-dot offline"></span> 未连接：请检查网络和配置</li>
-                            <li><span class="status-dot error"></span> 错误：配置或网络异常</li>
-                        </ul>
+                        <div class="form-group">
+                            <label for="current-table-select">当前使用的表格</label>
+                            <select id="current-table-select">
+                                <option value="">请选择表格</option>
+                            </select>
+                                            </div>
+
+                        <div class="table-list" id="table-list">
+                            <div class="empty-state">
+                                <p>还没有配置任何表格</p>
+                                <p>点击"添加表格"开始配置</p>
+                                        </div>
+                                    </div>
+                                </div>
+                </div>
+
+                <div id="settings-tab" class="tab-content">
+                    <div class="section">
+                        <h3>快捷键设置</h3>
+                        <div class="section-desc">自定义智能捕获快捷键</div>
+                        
+                        <div class="form-group">
+                            <label for="smart-capture-shortcut">智能捕获快捷键</label>
+                            <div class="shortcut-input-group">
+                                <input type="text" id="smart-capture-shortcut" readonly placeholder="点击右侧按钮设置快捷键">
+                                <button type="button" id="edit-shortcut-btn" class="btn btn-secondary">修改</button>
+                                <button type="button" id="reset-shortcut-btn" class="btn btn-secondary">重置</button>
+                            </div>
+                        </div>
+                        
+                        <div class="button-group">
+                            <button type="button" id="save-settings-btn" class="btn btn-primary">保存设置</button>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h3>实时模式</h3>
+                        <div class="section-desc">启动实时模式后，复制内容到剪贴板将自动上传到飞书</div>
+                        
+                        <div class="realtime-control">
+                            <div class="realtime-status" id="realtime-status">
+                                <div class="status-indicator">
+                                    <div class="status-dot" id="realtime-dot"></div>
+                                    <span class="status-text" id="realtime-text">实时模式已关闭</span>
+                                </div>
+                            </div>
+                            
+                            <div class="realtime-actions">
+                                <button type="button" id="toggle-realtime-btn" class="btn btn-secondary">
+                                    <span class="btn-icon">🔴</span>
+                                    启动实时模式
+                                </button>
+                            </div>
+                            
+                            <div class="realtime-info">
+                                <div class="info-item">
+                                    <strong>使用说明：</strong>
+                                    <ul>
+                                        <li>连续按两次快捷键可快速进入实时模式</li>
+                                        <li>实时模式下，复制文本或截图将自动上传</li>
+                                        <li>按 ESC 键或再次按快捷键可退出实时模式</li>
+                                        <li>实时模式适合会议、课堂等需要连续收集素材的场景</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h3>配置管理</h3>
+                        <div class="section-desc">导入和导出应用配置，方便团队成员快速配置</div>
+                        
+                        <div class="config-management">
+                            <div class="config-actions">
+                                <button type="button" id="export-config-btn" class="btn btn-primary">
+                                    <span class="btn-icon">📤</span>
+                                    导出配置
+                                </button>
+                                <button type="button" id="import-config-btn" class="btn btn-secondary">
+                                    <span class="btn-icon">📥</span>
+                                    导入配置
+                                </button>
+                            </div>
+                            
+                            <div class="config-info">
+                                <div class="info-item">
+                                    <strong>导出说明：</strong>
+                                    <p>导出包含飞书应用配置、表格配置和快捷键设置的完整配置文件。</p>
+                                </div>
+                                <div class="info-item">
+                                    <strong>导入说明：</strong>
+                                    <p>导入配置文件将覆盖当前设置，建议先导出当前配置作为备份。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h3>数据管理</h3>
+                        <div class="section-desc">管理应用数据和缓存</div>
+                        
+                        <div class="data-management">
+                            <div class="data-actions">
+                                <button type="button" id="clear-cache-btn" class="btn btn-secondary">
+                                    <span class="btn-icon">🗑️</span>
+                                    清除缓存
+                                </button>
+                                <button type="button" id="reset-config-btn" class="btn btn-secondary danger">
+                                    <span class="btn-icon">⚠️</span>
+                                    重置配置
+                                </button>
+                            </div>
+
+                            <div class="data-info">
+                                <div class="info-item">
+                                    <strong>清除缓存：</strong>
+                                    <p>清除应用缓存数据，不会影响配置设置。</p>
+                                </div>
+                                <div class="info-item">
+                                    <strong>重置配置：</strong>
+                                    <p>将所有设置恢复为默认值，此操作不可撤销。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="about-tab">
+                    <div class="section">
+                        <h3>关于素材快捷投递工具</h3>
+                        <div class="about-info">
+                            <h4>素材快捷投递工具</h4>
+                            <p>一个高效的素材管理工具，帮助您快速将文本和图片内容提交到飞书多维表格中。</p>
+                            
+                            <div class="feature-list">
+                                <h5>主要功能</h5>
+                                <ul>
+                                    <li>✨ 智能捕获：自动识别剪贴板内容类型</li>
+                                    <li>📝 文本提交：快速提交文本内容到指定字段</li>
+                                    <li>🖼️ 图片上传：支持图片上传到附件字段</li>
+                                    <li>⚡ 快捷键操作：全局快捷键快速调用</li>
+                                    <li>🔧 灵活配置：支持多表格配置和字段映射</li>
+                                    <li>📤 配置管理：支持配置导入导出，方便团队使用</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="tech-info">
+                                <h5>技术信息</h5>
+                                <p>基于 Electron + 飞书开放API 构建</p>
+                                <p>版本：1.0.0</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h3>使用说明</h3>
+                        <div class="usage-tips">
+                            <div class="tip-item">
+                                <h4>📋 智能捕获</h4>
+                                <p>复制内容后按快捷键，自动识别文本或图片并打开对应的提交窗口</p>
+                            </div>
+                            <div class="tip-item">
+                                <h4>🖼️ 图片捕获</h4>
+                                <p>截图或复制图片后使用智能捕获，自动识别并提交到表格</p>
+                            </div>
+                            <div class="tip-item">
+                                <h4>📝 文本捕获</h4>
+                                <p>复制文本后使用智能捕获，可以添加备注后提交</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </main>
+    </div>
 
-        <footer>
-            <p>版本 1.0.0 | 使用 Electron 构建</p>
-        </footer>
+    <div class="modal-overlay" id="table-config-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 id="modal-title">添加表格配置</h3>
+                <button class="modal-close" id="close-modal-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="table-name">表格名称</label>
+                    <input type="text" id="table-name" placeholder="为这个表格配置起个名字">
+                </div>
+
+                <!-- 编辑模式：显示已有配置信息 -->
+                <div id="edit-mode-info" style="display: none;">
+                    <div class="form-group">
+                        <label>App Token</label>
+                        <div class="readonly-field" id="edit-app-token">-</div>
+                    </div>
+                    <div class="form-group">
+                        <label>Table ID</label>
+                        <div class="readonly-field" id="edit-table-id">-</div>
+                    </div>
+                    <div class="form-group">
+                        <label>表格链接</label>
+                        <div class="readonly-field" id="edit-table-url">-</div>
+                    </div>
+                </div>
+
+                <!-- 添加模式：输入方式选择 -->
+                <div id="add-mode-input" style="display: block;">
+                    <!-- 输入方式选择 -->
+                    <div class="form-group">
+                        <label>输入方式</label>
+                        <div class="radio-group">
+                            <label class="radio-option">
+                                <input type="radio" name="input-method" value="url" checked>
+                                <span>通过数据表链接（推荐）</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="input-method" value="manual">
+                                <span>手动输入 App Token 和 Table ID</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- 数据表链接输入 -->
+                    <div class="form-group" id="table-url-group">
+                        <label for="table-url">数据表链接</label>
+                        <input type="url" id="table-url" placeholder="请粘贴飞书多维表格的链接">
+                        <span class="help-text">在浏览器中打开多维表格，复制链接，例如：https://xxx.feishu.cn/base/...</span>
+                        <button type="button" id="parse-url-btn" class="btn btn-secondary btn-small" style="margin-top: 8px;">解析链接</button>
+                    </div>
+
+                    <!-- 手动输入组 -->
+                    <div class="manual-input-group" id="manual-input-group" style="display: none;">
+                        <div class="form-group">
+                            <label for="app-token">App Token</label>
+                            <input type="text" id="app-token" placeholder="多维表格的 App Token">
+                            <span class="help-text">在飞书多维表格URL中获取</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="table-id">Table ID</label>
+                            <input type="text" id="table-id" placeholder="表格的 Table ID">
+                            <span class="help-text">在飞书多维表格URL中获取</span>
+                        </div>
+                    </div>
+
+                    <div class="button-group">
+                        <button type="button" id="load-fields-btn" class="btn btn-secondary">读取字段</button>
+                        <button type="button" id="test-table-btn" class="btn btn-secondary">测试表格</button>
+                    </div>
+                </div>
+
+                <!-- 编辑模式：重新读取字段按钮 -->
+                <div id="edit-mode-actions" style="display: none;">
+                    <div class="button-group">
+                        <button type="button" id="reload-fields-btn" class="btn btn-secondary">重新读取字段</button>
+                        <button type="button" id="test-table-edit-btn" class="btn btn-secondary">测试表格</button>
+                    </div>
+                </div>
+
+                <div class="field-mapping" id="field-mapping" style="display: none;">
+                    <h4>字段映射配置</h4>
+                    <p class="help-text">选择用于存储不同类型内容的字段（可选）</p>
+                    
+                    <div class="form-group">
+                        <label for="text-field">文本字段</label>
+                        <select id="text-field">
+                            <option value="">不使用</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="image-field">图片字段</label>
+                        <select id="image-field">
+                            <option value="">不使用</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="comment-field">备注字段</label>
+                        <select id="comment-field">
+                            <option value="">不使用</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="submitter-field">提交者字段</label>
+                        <select id="submitter-field">
+                            <option value="">不使用</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="time-field">时间字段</label>
+                        <select id="time-field">
+                            <option value="">不使用</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="cancel-modal-btn" class="btn btn-secondary">取消</button>
+                <button type="button" id="save-table-btn" class="btn btn-primary">保存表格</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="loading-overlay" id="loading-overlay">
+        <div class="loading-spinner">
+            <div class="spinner"></div>
+            <p>处理中...</p>
+        </div>
     </div>
 
     <script src="main.js"></script>
